@@ -2,32 +2,28 @@
 kind: Ingress
 apiVersion: networking.k8s.io/v1beta1
 metadata:
-  name: alter-test-app
-  labels:
-    app: alter-test-app
+    name: alter-test-app-ingress
+    annotations:
+        kubernetes.io/ingress.class: "nginx"
 spec:
   rules:
     - host: alter-test.chuprunov.name
       http:
         paths:
-          - path:  .
-            backend:
-              serviceName: alter-test-app
-              servicePort: 80
+        - backend:
+            serviceName: alter-test-app
+            servicePort: 80
 ---
-kind: Service
 apiVersion: v1
+kind: Service
 metadata:
   name: alter-test-app
 spec:
-  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 8080
   selector:
     app: alter-test-app
-  ports:
-    - name: http
-      protocol: TCP
-      port: 80
-      targetPort: 8080
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -37,7 +33,7 @@ spec:
   selector:
     matchLabels:
       app: alter-test-app
-  replicas: 2
+  replicas: 3
   minReadySeconds: 15
   strategy:
     type: RollingUpdate
@@ -53,6 +49,9 @@ spec:
       - name: alter-test-app
         image: unitedt/alter-test-app:latest
         imagePullPolicy: Always
+        env:
+          - name: DATABASE_URL
+            value: "${DATABASE_URL}"
         ports:
         - containerPort: 8080
           protocol: TCP

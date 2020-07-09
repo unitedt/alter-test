@@ -1,1 +1,1 @@
-http://localhost:8080/accounts/transfer POST <transfer.json
+http://alter-test.chuprunov.name/accounts/transfer POST <transfer.json
