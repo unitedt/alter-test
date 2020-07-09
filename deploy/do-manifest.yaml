@@ -1,0 +1,58 @@
+---
+kind: Ingress
+apiVersion: networking.k8s.io/v1beta1
+metadata:
+  name: alter-test-app
+  labels:
+    app: alter-test-app
+spec:
+  rules:
+    - host: alter-test.chuprunov.name
+      http:
+        paths:
+          - path:  .
+            backend:
+              serviceName: alter-test-app
+              servicePort: 80
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: alter-test-app
+spec:
+  type: LoadBalancer
+  selector:
+    app: alter-test-app
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alter-test-app
+spec:
+  selector:
+    matchLabels:
+      app: alter-test-app
+  replicas: 2
+  minReadySeconds: 15
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: alter-test-app
+    spec:
+      containers:
+      - name: alter-test-app
+        image: unitedt/alter-test-app:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          protocol: TCP

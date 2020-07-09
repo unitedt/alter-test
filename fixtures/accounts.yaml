@@ -1,0 +1,4 @@
+App\Entity\Account:
+    account_{1..1000}:
+        id: <current()>
+        amount: <numberBetween(0, 100000)>

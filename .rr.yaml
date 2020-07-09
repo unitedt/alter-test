@@ -1,0 +1,47 @@
+http:
+  address: "0.0.0.0:8080"
+
+  uploads:
+    forbid: [".php", ".exe", ".bat"]
+
+  workers:
+    command: "php bin/console baldinof:roadrunner:worker"
+    relay: "unix://var/roadrunner.sock"
+
+    # worker pool configuration.
+    pool:
+      # number of workers to be serving.
+      numWorkers: 4
+
+      # maximum jobs per worker, 0 - unlimited.
+      maxJobs:  100
+
+      # for how long worker is allowed to be bootstrapped.
+      allocateTimeout: 60
+
+      # amount of time given to worker to gracefully destruct itself.
+      destroyTimeout:  60
+
+static:
+  dir:   "public"
+  forbid: [".php", ".htaccess"]
+
+metrics:
+  # prometheus client address (path /metrics added automatically)
+  address: localhost:2112
+
+  # list of metrics to collect from application
+  collect:
+    # metric name
+    app_metric:
+      # type [gauge, counter, histogram, summary]
+      type:    histogram
+
+      # short description
+      help:    "Custom application metric"
+
+      # metric groups/tags
+      labels:  ["type"]
+
+      # for histogram only
+      buckets: [0.1, 0.2, 0.3, 1.0]
