@@ -16,7 +16,7 @@ PHP-приложений внутри Go-рутин и балансируя на
 
 ## Деплой в кластер Kubernetes
 
-`export DATABASE_URL=postgresql://dbuser:dbpasswd@dbhost/alter_test; envsubst  <deploy/do-manifest.yaml | kubectl apply -f -`
+`export DATABASE_URL=postgresql://dbuser:dbpasswd@dbhost/alter_test; envsubst  <deploy/do-manifest.yaml | kubectl apply -f -; unset DATABASE_URL`
 
 (не прописываем секреты в конфигах. В настоящем продакшне их следует хранить в особом хранилище, например,
 *Vault*. Для целей тестового задания подойдёт и передача через переменную окружения).
@@ -54,5 +54,5 @@ PHP-приложений внутри Go-рутин и балансируя на
 
 `/loadtest/run_siege.sh http://alter-test.chuprunov.name`
 
-Скрипт [./loadtest/run_siege.sh](./loadtest/run_siege.sh) настроен на тестирование в 4 потока, всего 10000 запросов.
+Скрипт [./loadtest/run_siege.sh](./loadtest/run_siege.sh) настроен на тестирование в 50 потоков, всего 10000 запросов.
 

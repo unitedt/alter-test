@@ -12,4 +12,4 @@ cd ${DIRECTORY}
 
 echo "$SERVER/accounts/transfer POST <transfer.json" > siege.urls
 
-siege -c 4 -r 2500 -f siege.urls -T "application/json"
+siege -c 50 -r 200 -f siege.urls -T "application/json"
