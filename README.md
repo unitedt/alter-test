@@ -80,7 +80,7 @@ NGINX Ingress Controller, что делается в интерфейсе сам
 В этих условиях трудно добиться более ~250 requests per second. Что вполне соответствует требованиям теста, однако не 
 задействует все возможности используемой конфигурации Kubernetes.
 
-`$ docker run unitedt/alter-test-siege
+```$ docker run unitedt/alter-test-siege
 New configuration template added to /root/.siege
 Run siege -C to view the current settings in that file
 ** SIEGE 4.0.4
@@ -100,7 +100,7 @@ Failed transactions:	           0
 Longest transaction:	        7.35
 Shortest transaction:	        0.14
  
-IS ASCII: FALSE`
+IS ASCII: FALSE```
 
 
 ## Ограничения
