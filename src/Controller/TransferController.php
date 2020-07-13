@@ -44,7 +44,6 @@ class TransferController
      * )
      * @param TransferRequest $request
      * @return JsonResponse
-     * @throws BadRequestHttpException
      */
     public function __invoke(TransferRequest $request)
     {
