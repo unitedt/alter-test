@@ -14,9 +14,12 @@ PHP-приложений внутри Go-рутин и балансируя на
 Выложил сервис в Kubernetes-облако [DigitalOcean](https://www.digitalocean.com/products/kubernetes/), 
 он доступен по адресу: http://alter-test.chuprunov.name
 
+БД развёрнута на managed database сервисе Digital Ocean, который позволяет управлять High-Available кластером БД
+с master-slave репликацией и автоматическим failover. Это наиболее приближено к реальным production условиям.
+
 ## Деплой в кластер Kubernetes
 
-`export DATABASE_URL=postgresql://dbuser:dbpasswd@dbhost/alter_test; envsubst  <deploy/do-manifest.yaml | kubectl apply -f -; unset DATABASE_URL`
+`export DATABASE_URL=postgresql://dbuser:dbpasswd@dbhost/alter_test; envsubst <deploy/do-manifest.yaml | kubectl apply -f -; unset DATABASE_URL`
 
 (не прописываем секреты в конфигах. В настоящем продакшне их следует хранить в особом хранилище, например,
 *Vault*. Для целей тестового задания подойдёт и передача через переменную окружения).
@@ -47,6 +50,8 @@ PHP-приложений внутри Go-рутин и балансируя на
 Для запуска тестов:
 
 `vendor/bin/behat`
+
+Тесты расположены [./features](./features)
 
 ## Нагрузочное тестирование
 

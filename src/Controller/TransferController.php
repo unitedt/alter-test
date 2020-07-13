@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 class TransferController
 {
@@ -47,13 +48,19 @@ class TransferController
      */
     public function __invoke(TransferRequest $request)
     {
-        $errors = $this->validator->validate($request);
+        try {
+            $errors = $this->validator->validate($request);
 
-        if (\count($errors) > 0) {
-            throw new BadRequestHttpException((string) $errors);
+            if (\count($errors) > 0) {
+                throw new BadRequestHttpException((string)$errors);
+            }
+
+            $result = $this->accountDao->transfer($request->getAccountFrom(), $request->getAccountTo(),
+                $request->getAmount());
         }
-
-        $result = $this->accountDao->transfer($request->getAccountFrom(), $request->getAccountTo(), $request->getAmount());
+        catch (\Exception $e) {
+            return new JsonResponse(['error' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
 
         return new JsonResponse($result);
     }
