@@ -4,6 +4,7 @@ namespace App\Dao;
 
 use App\Dto\TransferResponse;
 use App\Entity\Account;
+use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManagerInterface;
 
 class AccountDao implements AccountDaoInterface
@@ -53,6 +54,37 @@ class AccountDao implements AccountDaoInterface
                 throw new \InvalidArgumentException('accountTo id: ' . $accountTo . ' not exists!');
             }
 
+            $result = $this->getAccounts($accountFrom, $accountTo);
+        }
+        catch (DBALException $e) {
+            # generally for check constraint violation
+            $conn->rollBack();
+            $result = $this->getAccounts($accountFrom, $accountTo);
+            $result->setMessage($e->getMessage());
+            return $result;
+
+        }
+        catch (\Exception $e) {
+            $conn->rollBack();
+            throw $e;
+        }
+
+        $conn->commit();
+
+        return $result;
+    }
+
+    /**
+     * @param int $accountFrom
+     * @param int $accountTo
+     * @return TransferResponse
+     * @throws \Exception
+     */
+    private function getAccounts(int $accountFrom, int $accountTo): TransferResponse
+    {
+        $conn = $this->entityManager->getConnection();
+
+        try {
             $stmt = $conn->prepare('SELECT id, amount FROM ' . self::TABLE_NAME . ' WHERE id IN (?, ?)');
             $stmt->execute([$accountFrom, $accountTo]);
 
@@ -67,13 +99,9 @@ class AccountDao implements AccountDaoInterface
 
         }
         catch (\Exception $e) {
-            $conn->rollBack();
             throw $e;
         }
 
-        $conn->commit();
-
-        return new TransferResponse($ret[$accountFrom], $ret[$accountTo]);
+        return new TransferResponse($ret[$accountFrom] ?? null, $ret[$accountTo] ?? null);
     }
-
 }

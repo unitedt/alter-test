@@ -61,7 +61,10 @@ class TransferController
             return new JsonResponse(['error' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        return new JsonResponse($result);
+        return new JsonResponse(
+            $result,
+            'OK' === $result->getMessage() ? Response::HTTP_OK : Response::HTTP_INTERNAL_SERVER_ERROR
+        );
     }
 
 }

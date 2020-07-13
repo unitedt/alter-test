@@ -7,6 +7,11 @@ use App\Entity\Account;
 class TransferResponse implements \JsonSerializable
 {
     /**
+     * @var string
+     */
+    private $message = "OK";
+
+    /**
      * @var Account
      */
     private $accountFrom;
@@ -25,6 +30,22 @@ class TransferResponse implements \JsonSerializable
     {
         $this->accountFrom = $accountFrom;
         $this->accountTo = $accountTo;
+    }
+
+    /**
+     * @param string $message
+     */
+    public function setMessage(string $message): void
+    {
+        $this->message = $message;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMessage(): string
+    {
+        return $this->message;
     }
 
     /**
@@ -49,8 +70,11 @@ class TransferResponse implements \JsonSerializable
     public function jsonSerialize(): array
     {
         return [
-            'accountFrom' => $this->getAccountFrom(),
-            'accountTo' => $this->getAccountTo(),
+            'message' => $this->getMessage(),
+            'result' => [
+                'accountFrom' => $this->getAccountFrom(),
+                'accountTo' => $this->getAccountTo(),
+            ]
         ];
     }
 }
