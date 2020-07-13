@@ -18,7 +18,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          "method"="POST",
  *          "input_formats"={"json"={"application/json"}},
  *          "swagger_context"={
- *              "tags" = {"Account"},
  *              "operationId" = "transfer",
  *              "summary" = "Transfer money from one account to another",
  *              "description" = "Transfer money from one account to another",
@@ -74,7 +73,7 @@ class Account implements \JsonSerializable
      * @var float Amount
      * (N.B.: it expects string on JSON input, to avoid float precision errors)
      *
-     * @ORM\Column(type="decimal", precision=10, scale=2)
+     * @ORM\Column(type="decimal", precision=10, scale=2, options={"check":"CHECK(amount >= 0)"})
      * @Assert\NotBlank
      * @Assert\PositiveOrZero
      */
