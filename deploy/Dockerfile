@@ -1,7 +1,7 @@
 # Dockerfile
 FROM php:7.4-alpine
 
-RUN apk add --no-cache autoconf openssl-dev g++ make pcre-dev icu-dev zlib-dev libzip-dev postgresql-dev && \
+RUN apk add --no-cache autoconf g++ make openssl-dev pcre-dev icu-dev zlib-dev libzip-dev postgresql-dev && \
     docker-php-ext-install bcmath intl opcache zip sockets pdo pdo_pgsql && \
     apk del --purge autoconf g++ make
 
