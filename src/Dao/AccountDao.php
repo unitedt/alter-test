@@ -84,22 +84,16 @@ class AccountDao implements AccountDaoInterface
     {
         $conn = $this->entityManager->getConnection();
 
-        try {
-            $stmt = $conn->prepare('SELECT id, amount FROM ' . self::TABLE_NAME . ' WHERE id IN (?, ?)');
-            $stmt->execute([$accountFrom, $accountTo]);
+        $stmt = $conn->prepare('SELECT id, amount FROM ' . self::TABLE_NAME . ' WHERE id IN (?, ?)');
+        $stmt->execute([$accountFrom, $accountTo]);
 
-            $ret = [];
+        $ret = [];
 
-            while ($row = $stmt->fetch()) {
-                $account = new Account();
-                $account->setId($row['id']);
-                $account->setAmount($row['amount']);
-                $ret[$account->getId()] = $account;
-            }
-
-        }
-        catch (\Exception $e) {
-            throw $e;
+        while ($row = $stmt->fetch()) {
+            $account = new Account();
+            $account->setId($row['id']);
+            $account->setAmount($row['amount']);
+            $ret[$account->getId()] = $account;
         }
 
         return new TransferResponse($ret[$accountFrom] ?? null, $ret[$accountTo] ?? null);
