@@ -1,6 +1,6 @@
 default:
   calls:
-    error_reporting: 16383 # E_ALL & ~E_USER_DREPRECATED
+    error_reporting: 16383 # E_ALL & ~E_USER_DEPRECATED
   suites:
     default:
       contexts:
@@ -14,10 +14,10 @@ default:
       kernel:
         env: "test"
         debug: "true"
-        bootstrap: "features/bootstrap/bootstrap.php"
+        bootstrap: "config/bootstrap.php"
         class: "App\\Kernel"
     Behat\MinkExtension:
-      base_url: "http://localhost:8080"
+      base_url: "http://localhost"
       sessions:
         default:
           symfony2: ~
