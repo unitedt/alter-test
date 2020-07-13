@@ -3,7 +3,6 @@ Feature: Manage accounts
   As a client software developer
   I need to be able to create and retrieve them through the API.
 
-  # the "@createSchema" annotation provided by API Platform creates a temporary SQLite database for testing the API
   @createSchema
   Scenario: Create an account
     When I add "Content-Type" header equal to "application/ld+json"
@@ -21,7 +20,6 @@ Feature: Manage accounts
     And the JSON node "id" should be equal to the number 3000
     And the JSON node "amount" should be equal to the string "10000"
 
-  # The "@dropSchema" annotation must be added on the last scenario of the feature file to drop the temporary SQLite database
   @dropSchema
   Scenario: Retrieve an account
     When I add "Content-Type" header equal to "application/ld+json"
