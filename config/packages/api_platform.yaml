@@ -1,9 +1,11 @@
 api_platform:
     title: Alter Test API
     version: 1.0.0
+    allow_plain_identifiers: true
     mapping:
         paths: ['%kernel.project_dir%/src/Entity']
     patch_formats:
         json: ['application/merge-patch+json']
     swagger:
         versions: [2]
+
