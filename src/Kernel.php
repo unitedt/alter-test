@@ -2,18 +2,25 @@
 
 namespace App;
 
+use App\Serializer\ItemNormalizer;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Resource\FileResource;
+use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\Routing\RouteCollectionBuilder;
 
-class Kernel extends BaseKernel
+class Kernel extends BaseKernel implements CompilerPassInterface
 {
     use MicroKernelTrait;
 
     private const CONFIG_EXTS = '.{php,xml,yaml,yml}';
+
+    public function process(ContainerBuilder $container)
+    {
+        $container->getDefinition('api_platform.serializer.normalizer.item')->setClass(ItemNormalizer::class);
+    }
 
     public function registerBundles(): iterable
     {
