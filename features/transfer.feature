@@ -1,7 +1,7 @@
 Feature:
   In order to transfer money from one account to another
   As a client software developer
-  I need to be to perform transfer and get result through the API.
+  I need to be able to perform transfer and get result through the API.
 
   @createSchema
   Scenario: Do a transfer
