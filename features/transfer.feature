@@ -10,8 +10,8 @@ Feature:
       | 2000 | 100.00 |
       | 2001 | 0.00   |
 
-    When I add "Content-Type" header equal to "application/ld+json"
-    And I add "Accept" header equal to "application/ld+json"
+    When I add "Content-Type" header equal to "application/json"
+    And I add "Accept" header equal to "application/json"
     And I send a "POST" request to "/accounts/transfer" with body:
     """
     {
@@ -47,8 +47,8 @@ Feature:
       | 2002 | 100.00 |
       | 2003 | 0.00   |
 
-    When I add "Content-Type" header equal to "application/ld+json"
-    And I add "Accept" header equal to "application/ld+json"
+    When I add "Content-Type" header equal to "application/json"
+    And I add "Accept" header equal to "application/json"
     And I send a "POST" request to "/accounts/transfer" with body:
     """
     {
