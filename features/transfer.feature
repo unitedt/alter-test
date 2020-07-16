@@ -41,7 +41,7 @@ Feature:
     """
 
   @dropSchema
-  Scenario: Cannot do a transfer with amount over than actual
+  Scenario: Cannot do a transfer with amount more than actual
     Given the following accounts exists:
       | id   | amount |
       | 2002 | 100.00 |
