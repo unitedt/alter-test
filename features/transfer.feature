@@ -65,3 +65,4 @@ Feature:
     And the JSON node "result.accountFrom.amount" should be equal to the string "100"
     And the JSON node "result.accountTo.id" should be equal to the number 2003
     And the JSON node "result.accountTo.amount" should be equal to the string "0"
+

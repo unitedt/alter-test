@@ -1,0 +1,34 @@
+POST http://alter-test.chuprunov.name/accounts/transfer
+Content-Type: application/json
+
+{
+  "accountFrom": 1,
+  "accountTo": 2,
+  "amount": "0.01"
+}
+###
+
+GET http://alter-test.chuprunov.name/accounts/3000
+Content-Type: application/json
+
+###
+
+POST http://alter-test.chuprunov.name/accounts
+Content-Type: application/ld+json
+
+{
+    "id": 3001,
+    "amount": "000000.00"
+}
+
+###
+
+POST http://localhost:8080/accounts
+Content-Type: application/json
+
+{
+    "id": 3347,
+    "amount": "1000.00"
+}
+
+###

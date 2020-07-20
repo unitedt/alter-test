@@ -1,1 +1,5 @@
 http://alter-test.chuprunov.name/accounts/transfer POST <transfer.json
+http://alter-test.chuprunov.name/accounts/transfer POST <transfer2.json
+http://alter-test.chuprunov.name/accounts/transfer POST <transfer3.json
+http://alter-test.chuprunov.name/accounts/transfer POST <transfer4.json
+http://alter-test.chuprunov.name/accounts/transfer POST <transfer5.json
