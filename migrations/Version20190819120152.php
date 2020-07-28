@@ -18,7 +18,7 @@ final class Version20190819120152 extends AbstractMigration
     {
         $this->abortIf('postgresql' !== $this->connection->getDatabasePlatform()->getName(), 'Migration can only be executed safely on \'postgresql\'.');
 
-        $this->addSql('CREATE TABLE account (id INT NOT NULL, amount DECIMAL(10,2) NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE account (id INT NOT NULL, amount DECIMAL(10,2) NOT NULL CHECK(amount >= 0), PRIMARY KEY(id))');
     }
 
     public function down(Schema $schema): void

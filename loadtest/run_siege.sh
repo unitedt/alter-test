@@ -26,4 +26,4 @@ echo -e "$SERVER/accounts/transfer POST <transfer4.json" >> siege.urls
 #echo -e "$SERVER/accounts/transfer/6001" >> siege.urls
 echo -e "$SERVER/accounts/transfer POST <transfer5.json" >> siege.urls
 
-siege -c 40 -r 200 -f siege.urls -T "application/json"
+siege -c 40 -r 250 -f siege.urls -T "application/json"
